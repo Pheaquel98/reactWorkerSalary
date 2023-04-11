@@ -1,5 +1,4 @@
 import { useState } from "react"
-import "./App.css"
 import AddWorker from "./components/Workers/AddWorker"
 
 function App() {
