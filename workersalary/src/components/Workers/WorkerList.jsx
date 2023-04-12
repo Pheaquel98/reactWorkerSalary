@@ -1,18 +1,32 @@
 import React from "react"
 import Card from "../UI/Card"
 
-const WorkerList = () => {
+const WorkerList = (props) => {
+  if (props.workers.length < 1) {
+    return
+  }
+
+  const deleteWorker = (id) => {
+    props.setWorkers(props.workers.filter((item) => item.id !== id))
+  }
+
   return (
     <Card className="mt-10">
       <ul>
-        <li className="flex justify-between">
+        <li className="flex justify-between p-2">
           <span className="font-bold">İsim</span>
           <span className="font-bold">Maaş</span>
         </li>
-        <li>
-          <span>Emin Başbayan</span>
-          <span>6000₺</span>
-        </li>
+        {props.workers.map((worker) => (
+          <li
+            className="flex justify-between cursor-pointer hover:shadow-xl p-2 transition-shadow"
+            key={worker.id}
+            onClick={() => deleteWorker(worker.id)}
+          >
+            <span>{worker.name}</span>
+            <span className="text-teal-700 font-medium">{worker.wage}₺</span>
+          </li>
+        ))}
       </ul>
     </Card>
   )

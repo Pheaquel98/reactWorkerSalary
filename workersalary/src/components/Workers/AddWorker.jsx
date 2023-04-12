@@ -2,8 +2,9 @@ import React from "react"
 import Card from "../UI/Card"
 import Button from "../UI/Button"
 import { useState } from "react"
+import ErrorModal from "../UI/ErrorModal"
 
-const AddWorker = () => {
+const AddWorker = (props) => {
   const [workerName, setWorkerName] = useState("")
   const [wage, setWage] = useState("")
 
@@ -27,39 +28,49 @@ const AddWorker = () => {
     }
     setWorkerName("")
     setWage("")
-    console.log(workerName, wage)
+    props.setWorkers((prevState) => [
+      {
+        id: Math.floor(Math.random() * 99999),
+        name: workerName,
+        wage: wage,
+      },
+      ...prevState,
+    ])
   }
 
   return (
-    <Card className="mt-10">
-      <form className="flex flex-col gap-y-2" onSubmit={addWorkerHandler}>
-        <label htmlFor="name" className="font-medium">
-          Çalışan İsmi
-        </label>
-        <input
-          type="text"
-          className="max-w-[40rem] w-full mx-auto border p-2"
-          placeholder="Çalışan ismi yazınız"
-          id="name"
-          onChange={workerNameHandler}
-          value={workerName}
-        />
-        <label htmlFor="salary" className="font-medium">
-          Maaş Miktarı
-        </label>
-        <input
-          type="number"
-          className="max-w-[40rem] w-full mx-auto border p-2"
-          placeholder="Maaş miktarı yazınız"
-          id="salary"
-          onChange={wageHandler}
-          value={wage}
-        />
-        <Button className="mt-2" type="submit">
-          Ekle
-        </Button>
-      </form>
-    </Card>
+    <div>
+      <ErrorModal />
+      <Card className="mt-10">
+        <form className="flex flex-col gap-y-2" onSubmit={addWorkerHandler}>
+          <label htmlFor="name" className="font-medium">
+            Çalışan İsmi
+          </label>
+          <input
+            type="text"
+            className="max-w-[40rem] w-full mx-auto border p-2"
+            placeholder="Çalışan ismi yazınız"
+            id="name"
+            onChange={workerNameHandler}
+            value={workerName}
+          />
+          <label htmlFor="salary" className="font-medium">
+            Maaş Miktarı
+          </label>
+          <input
+            type="number"
+            className="max-w-[40rem] w-full mx-auto border p-2"
+            placeholder="Maaş miktarı yazınız"
+            id="salary"
+            onChange={wageHandler}
+            value={wage}
+          />
+          <Button className="mt-2" type="submit">
+            Ekle
+          </Button>
+        </form>
+      </Card>
+    </div>
   )
 }
 
